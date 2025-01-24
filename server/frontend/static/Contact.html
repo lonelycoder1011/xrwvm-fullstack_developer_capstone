@@ -1,0 +1,155 @@
+<html>
+<head>
+  <!-- Link the style sheet here -->
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/bootstrap.min.css"> 
+</head>
+<div>
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
+    <div class="container-fluid">
+      <h2 style="padding-right: 5%;">Dealerships</h2>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" style="font-size: larger;" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" style="font-size: larger;" href="/about">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="font-size: larger;" href="/contact">Contact Us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="card" style="width: 80%;margin: auto; margin-top:5%;">
+     <div class="banner" name="about-header">
+     <!-- Insert header information here -->
+     <h1>Contact Us</h1>
+       The Brilliant Cars dealership,available 24/7. Contact Us on Phone or my Email. You can also use the contact form for contacting us.
+  </div>
+   </div>
+
+   <div class="card" style="width: 80%; margin: auto; margin-top: 5%; display: flex; flex-direction: row; align-items: flex-start;">
+    <!-- Image Column -->
+      <div style="flex: 1; text-align: center; padding: 20px;">
+         <img src="/static/carshow.jpeg" alt="Contact Us" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+
+      </div>
+      <!-- Info Column -->
+      <div class="contact_info" style="flex: 1; padding: 20px;">
+          <!-- Address -->
+          <div class="info_item" style="margin-bottom: 20px;">
+              <i class="lnr lnr-home" style="font-size: 24px; color: #007bff; margin-right: 10px;"></i>
+              <h6 style="margin: 0; font-size: 18px; font-weight: bold;">Address</h6>
+              <p style="margin: 5px 0; font-size: 14px;">5th Balcony Street, New York</p>
+          </div>
+          <!-- Phone Number -->
+          <div class="info_item" style="margin-bottom: 20px;">
+              <i class="lnr lnr-phone-handset" style="font-size: 24px; color: #007bff; margin-right: 10px;"></i>
+              <h6 style="margin: 0; font-size: 18px; font-weight: bold;">Phone Number</h6>
+              <p style="margin: 5px 0; font-size: 14px;">+1 606 839 8657</p>
+         </div>
+          <!-- Emails -->
+          <div class="info_item">
+              <i class="lnr lnr-envelope" style="font-size: 24px; color: #007bff; margin-right: 10px;"></i>
+              <h6 style="margin: 0; font-size: 18px; font-weight: bold;">Emails</h6>
+              <p style="margin: 5px 0; font-size: 14px;">
+                  For Help : support@brillantcars.com <br>
+                  For Order Inquiry : sales@brillantcars.com <br>
+                  For Special deals : deals@brillantcars.com <br>
+                  For any order query contact our manager : charlesfg@brillantcars.com <br>
+              </p>
+          </div>
+      </div>
+  </div>
+
+
+    <div class="col-lg-9">
+        <form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address">
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" name="message" id="message" rows="1" placeholder="Enter Message"></textarea>
+                </div>
+            </div>
+            <div class="col-md-12 text-right">
+                <button type="submit" value="submit" class="primary_btn">
+                    <span>Send Message</span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const contactForm = document.getElementById("contactForm");
+    
+            contactForm.addEventListener("submit", function (event) {
+                // Prevent the default form submission
+                event.preventDefault();
+    
+                // Get form inputs
+                const name = document.getElementById("name").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const subject = document.getElementById("subject").value.trim();
+                const message = document.getElementById("message").value.trim();
+    
+                // Validation flags
+                let isValid = true;
+                let errorMessage = "";
+    
+                // Name validation
+                if (name === "") {
+                    errorMessage += "Name is required.\n";
+                    isValid = false;
+                }
+    
+                // Email validation (simple regex)
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (email === "" || !emailPattern.test(email)) {
+                    errorMessage += "Enter a valid email address.\n";
+                    isValid = false;
+                }
+    
+                // Subject validation
+                if (subject === "") {
+                    errorMessage += "Subject is required.\n";
+                    isValid = false;
+                }
+    
+                // Message validation
+                if (message.length < 10) {
+                    errorMessage += "Message must be at least 10 characters long.\n";
+                    isValid = false;
+                }
+    
+                // Show errors or submit the form
+                if (!isValid) {
+                    alert(errorMessage); // Show alert with errors
+                } else {
+                    alert("Form submitted successfully!");
+                    contactForm.submit(); // Submit the form
+                }
+            });
+        });
+    </script>        
+</div>  

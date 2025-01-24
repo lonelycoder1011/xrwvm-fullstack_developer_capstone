@@ -124,3 +124,123 @@ img{
     text-align:center;
     box-shadow: 2px 2px 3px #999;  
 }
+
+/* General Reset */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Contact Info Section */
+.contact_info {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px 20px;
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center; /* Center-align content for a clean look */
+}
+
+.contact_info .info_item {
+  margin-bottom: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Add subtle dividers */
+}
+
+.contact_info .info_item:last-child {
+  border-bottom: none; /* Remove border for the last item */
+}
+
+.contact_info .info_item i {
+  font-size: 30px;
+  color: #ffd700; /* Gold color for icons */
+  margin-bottom: 10px;
+}
+
+.contact_info .info_item h6 {
+  margin: 10px 0 5px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.contact_info .info_item p {
+  margin: 0;
+  font-size: 14px;
+  color: #f1f1f1;
+  opacity: 0.8;
+}
+
+/* Hover Effect for Icons */
+.contact_info .info_item i:hover {
+  color: #fff; /* Icon changes to white on hover */
+  transform: scale(1.2); /* Adds a subtle zoom effect */
+  transition: all 0.3s ease-in-out;
+}
+
+
+/* Form Section */
+.contact_form {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.contact_form .form-group {
+  margin-bottom: 15px;
+}
+
+.contact_form label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #555;
+}
+
+.contact_form input,
+.contact_form textarea {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  background: #f8f9fa;
+  color: #333;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.contact_form input:focus,
+.contact_form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.contact_form .primary_btn {
+  background: #007bff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.contact_form .primary_btn:hover {
+  background: #0056b3;
+}
+
+.contact_form .primary_btn span {
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact_info, .contact_form {
+      margin: 10px;
+  }
+}
