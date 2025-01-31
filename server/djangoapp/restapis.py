@@ -36,27 +36,29 @@ def get_request(endpoint, **kwargs):
         return {"error": "Network exception occurred"}
 
 def analyze_review_sentiments(text):
-    """
-    Sends a GET request to the sentiment analyzer to analyze text sentiments.
-
-    Args:
-        text (str): The text to analyze.
-
-    Returns:
-        dict: JSON response with sentiment analysis results.
-    """
-    # Ensure the text is URL-encoded to avoid issues with special characters
-    request_url = f"{sentiment_analyzer_url}analyze/{requests.utils.quote(text)}"
-    
-    print(f"GET from {request_url}")
     try:
-        # Call GET method of requests library
-        response = requests.get(request_url)
-        response.raise_for_status()  # Raise HTTPError for bad responses
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Network exception occurred: {e}")
-        return {"error": "Network exception occurred"}
+        if text:
+            url = os.getenv(
+                'SENTIMENT_ANALYZER_URL', 
+                'https://sentianalyzer.1r729rxqpt17.us-south.codeengine.appdomain.cloud/'
+            )
+            response = requests.get(
+                f"{url}analyze/{text}", 
+                headers={'Content-Type': 'application/json'}
+            )
+            
+            # Handle different response formats
+            if response.status_code == 200:
+                result = response.json()
+                return {
+                    'sentiment': result.get('sentiment', 'neutral'),
+                    'confidence': result.get('confidence', 0)
+                }
+            return {'sentiment': 'neutral', 'confidence': 0}
+        return {'sentiment': 'neutral', 'confidence': 0}
+    except Exception as e:
+        print(f"Sentiment Analysis Error: {str(e)}")
+        return {'sentiment': 'neutral', 'confidence': 0}
 
 def post_review(data_dict):
     """
@@ -79,5 +81,3 @@ def post_review(data_dict):
     except requests.exceptions.RequestException as e:
         print(f"Network exception occurred: {e}")
         return {"error": "Network exception occurred"}
-
-# Add code for posting review

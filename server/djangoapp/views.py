@@ -121,29 +121,45 @@ def get_dealerships(request, state="All"):
 # ...
 
 def get_dealer_reviews(request, dealer_id):
-    # if dealer id has been provided
-    if(dealer_id):
-        endpoint = "/fetchReviews/dealer/"+str(dealer_id)
+    if dealer_id:
+        endpoint = f"/fetchReviews/dealer/{dealer_id}"
         reviews = get_request(endpoint)
-        for review_detail in reviews:
-            response = analyze_review_sentiments(review_detail['review'])
-            print(response)
-            review_detail['sentiment'] = response['sentiment']
-        return JsonResponse({"status":200,"reviews":reviews})
-    else:
-        return JsonResponse({"status":400,"message":"Bad Request"})
+        
+        if isinstance(reviews, list):  # Ensure we have valid reviews
+            for review_detail in reviews:
+                try:
+                    response = analyze_review_sentiments(review_detail.get('review', ''))
+                    review_detail['sentiment'] = response.get('sentiment', 'neutral').lower()
+                except KeyError as e:
+                    review_detail['sentiment'] = 'neutral'
+                    logger.error(f"KeyError in sentiment analysis: {str(e)}")
+            return JsonResponse({"status": 200, "reviews": reviews})
+        return JsonResponse({"status": 400, "message": "Invalid reviews format"})
+    return JsonResponse({"status": 400, "message": "Bad Request"})
 
 # Create a `get_dealer_details` view to render the dealer details
 # def get_dealer_details(request, dealer_id):
 # ...
 
 def get_dealer_details(request, dealer_id):
-    if(dealer_id):
-        endpoint = "/fetchDealer/"+str(dealer_id)
-        dealership = get_request(endpoint)
-        return JsonResponse({"status":200,"dealer":dealership})
+    if dealer_id:
+        try:
+            endpoint = f"/fetchDealer/{str(dealer_id)}"
+            dealership = get_request(endpoint)  # Assuming this is a function that handles the GET request
+            
+            # If dealership data is not returned or is empty, return an error
+            if not dealership:
+                return JsonResponse({"status": 404, "message": "Dealer not found"}, status=404)
+            
+            return JsonResponse({"status": 200, "dealer": dealership}, status=200)
+        
+        except Exception as e:
+            # Handle any errors that may occur during the request
+            return JsonResponse({"status": 500, "message": f"Internal Server Error: {str(e)}"}, status=500)
+    
     else:
-        return JsonResponse({"status":400,"message":"Bad Request"})
+        # If no dealer_id is provided in the request
+        return JsonResponse({"status": 400, "message": "Bad Request: Dealer ID is required"}, status=400)
 
 # Create a `add_review` view to submit a review
 # def add_review(request):
