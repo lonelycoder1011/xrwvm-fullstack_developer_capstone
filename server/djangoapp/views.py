@@ -165,13 +165,36 @@ def get_dealer_details(request, dealer_id):
 # def add_review(request):
 # ...
 
-def add_review(request):
-    if(request.user.is_anonymous == False):
-        data = json.loads(request.body)
+@csrf_exempt
+def add_review(request, dealer_id):
+    if request.user.is_authenticated:
         try:
-            response = post_review(data)
-            return JsonResponse({"status":200})
-        except:
-            return JsonResponse({"status":401,"message":"Error in posting review"})
-    else:
-        return JsonResponse({"status":403,"message":"Unauthorized"})
+            data = json.loads(request.body)
+            review = {
+                "dealership": dealer_id,
+                "name": request.user.username,
+                "purchase": data.get("purchase", False),
+                "review": data["review"],
+                "purchase_date": data.get("purchase_date", ""),
+                "car_make": data.get("car_make", ""),
+                "car_model": data.get("car_model", ""),
+                "car_year": data.get("car_year", "")
+            }
+            response = post_review(review)
+            return JsonResponse({"status": 200, "message": "Review posted successfully"})
+        except Exception as e:
+            logger.error(f"Error posting review: {str(e)}")
+            return JsonResponse({"status": 500, "message": str(e)})
+    return JsonResponse({"status": 403, "message": "Unauthorized"})
+
+def get_cars(request):
+    car_models = CarModel.objects.select_related('car_make')
+    cars = []
+    for car_model in car_models:
+        cars.append({
+            "CarMake": car_model.car_make.name,
+            "CarModel": car_model.name,
+            "Year": car_model.year,
+            "Type": car_model.get_type_display()
+        })
+    return JsonResponse({"CarModels": cars})
