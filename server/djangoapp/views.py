@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 
+
 @csrf_exempt
 def login_user(request):
     """
@@ -22,14 +23,14 @@ def login_user(request):
     data = json.loads(request.body)
     username = data['userName']
     password = data['password']
-    
+
     user = authenticate(username=username, password=password)
     response_data = {"userName": username}
 
     if user is not None:
         login(request, user)
         response_data["status"] = "Authenticated"
-        
+
     return JsonResponse(response_data)
 
 
@@ -107,7 +108,7 @@ def get_dealerships(request, state="All"):
     """
     endpoint = "/fetchDealers" if state == "All" else f"/fetchDealers/{state}"
     dealerships = get_request(endpoint)
-    
+
     return JsonResponse({"status": 200, "dealers": dealerships})
 
 
@@ -150,7 +151,8 @@ def get_dealer_details(request, dealer_id):
 
             if not dealership:
                 return JsonResponse(
-                    {"status": 404, "message": "Dealer not found"}, status=404
+                    {"status": 404, "message": "Dealer not found"},
+                    status=404
                 )
 
             return JsonResponse({"status": 200, "dealer": dealership}, status=200)

@@ -60,14 +60,14 @@ def analyze_review_sentiments(text):
         if text:
             url = os.getenv(
                 'SENTIMENT_ANALYZER_URL',
-                ('https://sentianalyzer.1r729rxqpt17.us-south'
-                 '.codeengine.appdomain.cloud/')
+                (
+                    'https://sentianalyzer.1r729rxqpt17.us-south'
+                    '.codeengine.appdomain.cloud/'
+                )
             )
             response = requests.get(
                 f"{url}analyze/{text}",
-                headers={
-                    'Content-Type': 'application/json'
-                }
+                headers={'Content-Type': 'application/json'}
             )
 
             # Handle different response formats
