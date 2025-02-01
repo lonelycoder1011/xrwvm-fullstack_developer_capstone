@@ -28,7 +28,7 @@ class CarModel(models.Model):
     )
     name = models.CharField(max_length=100)  # Car model name
     dealer_id = models.IntegerField()  # Reference to
-#dealer in Cloudant database
+# Dealer in Cloudant database
 
     # Choices for car type
     CAR_TYPES = [
