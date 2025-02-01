@@ -27,8 +27,8 @@ class CarModel(models.Model):
         related_name='models'
     )
     name = models.CharField(max_length=100)  # Car model name
-    dealer_id = models.IntegerField()  # Reference to 
-    #dealer in Cloudant database
+    dealer_id = models.IntegerField()  # Reference to
+#dealer in Cloudant database
 
     # Choices for car type
     CAR_TYPES = [
@@ -52,7 +52,8 @@ class CarModel(models.Model):
         default=2023
     )  # Year of the car model
 
-    description = models.TextField(blank=True, null=True)  # Optional description
+# Optional description
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.car_make.name} {self.name} ({self.type})"

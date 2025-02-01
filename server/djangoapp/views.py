@@ -164,7 +164,7 @@ def get_dealer_details(request, dealer_id):
                 )
 
             return JsonResponse(
-                {"status": 200, "dealer": dealership}, 
+                {"status": 200, "dealer": dealership},
                 status=200
             )
 
