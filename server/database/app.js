@@ -1,31 +1,35 @@
+/* jshint esversion: 8 */
+
 const express = require('express');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
 const app = express();
 const port = 3030;
 
 app.use(cors());
-app.use(require('body-parser').urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-const reviews_data = JSON.parse(fs.readFileSync("reviews.json", 'utf8'));
-const dealerships_data = JSON.parse(fs.readFileSync("dealerships.json", 'utf8'));
+const reviewsData = JSON.parse(fs.readFileSync("reviews.json", 'utf8'));
+const dealershipsData = JSON.parse(fs.readFileSync("dealerships.json", 'utf8'));
 
 mongoose.connect("mongodb://mongo_db:27017/", { dbName: 'dealershipsDB' });
 
 const Reviews = require('./review');
 const Dealerships = require('./dealership');
 
-try {
-  Reviews.deleteMany({}).then(() => {
-    Reviews.insertMany(reviews_data['reviews']);
-  });
-  Dealerships.deleteMany({}).then(() => {
-    Dealerships.insertMany(dealerships_data['dealerships']);
-  });
-} catch (error) {
-  console.error('Error initializing the database:', error);
-}
+(async () => {
+  try {
+    await Reviews.deleteMany({});
+    await Reviews.insertMany(reviewsData.reviews);
+    await Dealerships.deleteMany({});
+    await Dealerships.insertMany(dealershipsData.dealerships);
+  } catch (error) {
+    console.error('Error initializing the database:', error);
+  }
+})();
 
 // Express route to home
 app.get('/', async (req, res) => {
@@ -88,23 +92,23 @@ app.get('/fetchDealer/:id', async (req, res) => {
 
 // Express route to insert review
 app.post('/insert_review', express.raw({ type: '*/*' }), async (req, res) => {
-  const data = JSON.parse(req.body);
-  const documents = await Reviews.find().sort({ id: -1 });
-  let new_id = documents[0]['id'] + 1;
-
-  const review = new Reviews({
-    "id": new_id,
-    "name": data['name'],
-    "dealership": data['dealership'],
-    "review": data['review'],
-    "purchase": data['purchase'],
-    "purchase_date": data['purchase_date'],
-    "car_make": data['car_make'],
-    "car_model": data['car_model'],
-    "car_year": data['car_year'],
-  });
-
   try {
+    const data = JSON.parse(req.body);
+    const documents = await Reviews.find().sort({ id: -1 });
+    const newId = documents.length > 0 ? documents[0].id + 1 : 1;
+
+    const review = new Reviews({
+      id: newId,
+      name: data.name,
+      dealership: data.dealership,
+      review: data.review,
+      purchase: data.purchase,
+      purchase_date: data.purchase_date,
+      car_make: data.car_make,
+      car_model: data.car_model,
+      car_year: data.car_year,
+    });
+
     const savedReview = await review.save();
     res.json(savedReview);
   } catch (error) {

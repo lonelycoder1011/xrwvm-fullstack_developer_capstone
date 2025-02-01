@@ -22,20 +22,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =\
+SECRET_KEY = (
     'django-insecure-ccow$tz_=9%dxu4(0%^(z%nx32#s@(zt9$ih@)5l54yny)wm-0'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'muhammadalih-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
+    'muhammadalih-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.'
+    'proxy.cognitiveclass.ai',
     '127.0.0.1',
     'localhost',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://muhammadalih-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
+    'https://muhammadalih-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.'
+    'proxy.cognitiveclass.ai',
 ]
 
 REST_FRAMEWORK = {
@@ -100,20 +103,25 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
+        ),
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.MinimumLengthValidator'
+        ),
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.CommonPasswordValidator'
+        ),
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.NumericPasswordValidator'
+        ),
     },
 ]
 
@@ -152,7 +160,11 @@ STATICFILES_DIRS = [
 ]
 
 # Session Settings
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Default session engine
-SESSION_COOKIE_AGE = 1209600  # Two weeks (default)
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Do not expire sessions on browser close
-SESSION_SAVE_EVERY_REQUEST = False  # Do not save sessions on every request
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# Default session engine
+SESSION_COOKIE_AGE = 1209600
+# Two weeks (default)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+# Do not expire sessions on browser close
+SESSION_SAVE_EVERY_REQUEST = False
+# Do not save sessions on every request
