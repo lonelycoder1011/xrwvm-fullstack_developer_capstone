@@ -39,7 +39,7 @@ def get_request(endpoint, **kwargs):
     try:
         # Call GET method of requests library
         response = requests.get(request_url)
-        response.raise_for_status()  # Raise HTTPError for bad responses (4xx, 5xx)
+        response.raise_for_status()  # Raise HTTPError
         return response.json()
     except requests.exceptions.RequestException as e:
         print(f"Network exception occurred: {e}")

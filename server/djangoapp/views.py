@@ -44,7 +44,9 @@ def logout_request(request):
         request.session.flush()
         return JsonResponse({"status": True, "userName": ""})
 
-    return JsonResponse({"status": False, "message": "Invalid request method."})
+    return JsonResponse(
+        {"status": False, "message": "Invalid request method."}
+    )
 
 
 @csrf_exempt
@@ -133,11 +135,17 @@ def get_dealer_reviews(request, dealer_id):
                     review_detail['sentiment'] = 'neutral'
                     logger.error(f"KeyError in sentiment analysis: {str(e)}")
 
-            return JsonResponse({"status": 200, "reviews": reviews})
+            return JsonResponse(
+                {"status": 200, "reviews": reviews}
+            )
 
-        return JsonResponse({"status": 400, "message": "Invalid reviews format"})
+        return JsonResponse(
+            {"status": 400, "message": "Invalid reviews format"}
+        )
 
-    return JsonResponse({"status": 400, "message": "Bad Request"})
+    return JsonResponse(
+        {"status": 400, "message": "Bad Request"}
+    )
 
 
 def get_dealer_details(request, dealer_id):
@@ -155,7 +163,10 @@ def get_dealer_details(request, dealer_id):
                     status=404
                 )
 
-            return JsonResponse({"status": 200, "dealer": dealership}, status=200)
+            return JsonResponse(
+                {"status": 200, "dealer": dealership}, 
+                status=200
+            )
 
         except Exception as e:
             return JsonResponse(
