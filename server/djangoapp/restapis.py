@@ -47,15 +47,27 @@ def get_request(endpoint, **kwargs):
 
 
 def analyze_review_sentiments(text):
+    """
+    Analyzes the sentiment of a given text using an external API.
+
+    Args:
+        text (str): The text to analyze.
+
+    Returns:
+        dict: The sentiment and confidence score.
+    """
     try:
         if text:
             url = os.getenv(
                 'SENTIMENT_ANALYZER_URL',
-                'https://sentianalyzer.1r729rxqpt17.us-south.codeengine.appdomain.cloud/'
+                ('https://sentianalyzer.1r729rxqpt17.us-south'
+                 '.codeengine.appdomain.cloud/')
             )
             response = requests.get(
                 f"{url}analyze/{text}",
-                headers={'Content-Type': 'application/json'}
+                headers={
+                    'Content-Type': 'application/json'
+                }
             )
 
             # Handle different response formats

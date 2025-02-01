@@ -3,7 +3,6 @@ from django.utils.timezone import now
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib import admin
 
-
 # Create your models here.
 
 # Car Make model
@@ -11,7 +10,9 @@ class CarMake(models.Model):
     name = models.CharField(max_length=100)  # Car make name
     description = models.TextField()  # Description of the car make
     # Additional fields as needed
-    created_at = models.DateTimeField(default=now, editable=False)  # Timestamp for creation
+    created_at = models.DateTimeField(
+        default=now, editable=False
+    )  # Timestamp for creation
 
     def __str__(self):
         return self.name  # String representation
@@ -40,17 +41,16 @@ class CarModel(models.Model):
     )  # Car type
 
     year = models.IntegerField(
-        validators=[
-            MinValueValidator(2015),
-            MaxValueValidator(2023)
-        ],
+        validators=[MinValueValidator(2015), MaxValueValidator(2023)],
         default=2023
     )  # Year of the car model
 
     description = models.TextField(blank=True, null=True)  # Optional description
 
     def __str__(self):
-        return f"{self.car_make.name} {self.name} ({self.type})"
+        return (
+            f"{self.car_make.name} {self.name} ({self.type})"
+        )
 
 
 admin.site.register(CarMake)
