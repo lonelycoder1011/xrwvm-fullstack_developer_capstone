@@ -1,5 +1,5 @@
 # Use Python 3.12 slim as the base image
-FROM python:3.12.0-slim-bookworm
+FROM python:3.14.0-slim-bookworm
 
 # Set environment variables to improve Python performance
 ENV PYTHONBUFFERED=1
